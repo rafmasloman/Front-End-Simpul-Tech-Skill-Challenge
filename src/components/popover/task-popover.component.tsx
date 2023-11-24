@@ -16,10 +16,14 @@ import TaskCard from '../task/task-card.component';
 import { IPopoverProps } from '@/interfaces/popover.interfaces';
 import { useState } from 'react';
 import { TODOS_DATA } from '@/pages/api/dummy.api';
+import CreateTask from '../task/create-task.component';
+import { ICExpand } from '@/assets/icons/expand-icon';
 
 const TaskPopover = ({ isActive, isOpened, onClick }: IPopoverProps) => {
   const [opened, setOpened] = useState(false);
   const [value, setValue] = useState('');
+  const [isAddTask, setIsAddTask] = useState(false);
+  const [addTask, setAddTask] = useState<{id: number, title: string, description: string, date: string}>({id:0,date:'',title:'',description:''})
 
   return (
     <Popover width={700} opened={isOpened} position="top">
@@ -48,7 +52,11 @@ const TaskPopover = ({ isActive, isOpened, onClick }: IPopoverProps) => {
           <Group justify="space-between">
             <Select
               w={'fit-content'}
-              rightSection={<IconArrowDown size={20} />}
+              rightSection={
+                <div className="rotate-180">
+                  <ICExpand />
+                </div>
+              }
               placeholder="My Task"
               defaultValue={'My Task'}
               data={['Personal Errands', 'Urgent To-Do']}
@@ -61,10 +69,14 @@ const TaskPopover = ({ isActive, isOpened, onClick }: IPopoverProps) => {
                 dropdown: {
                   color: COLORS['primary-dark-gray'],
                 },
-                section: {},
               }}
             />
-            <Button bg={COLORS['primary-blue']}>New Task</Button>
+            <Button
+              bg={COLORS['primary-blue']}
+              onClick={() => setIsAddTask(!isAddTask)}
+            >
+              New Task
+            </Button>
           </Group>
 
           <Space mb={20} />
@@ -83,6 +95,8 @@ const TaskPopover = ({ isActive, isOpened, onClick }: IPopoverProps) => {
               </>
             );
           })}
+
+          {isAddTask ? <CreateTask /> : null}
         </Card>
       </Popover.Dropdown>
     </Popover>

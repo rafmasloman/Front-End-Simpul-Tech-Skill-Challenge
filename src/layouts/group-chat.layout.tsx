@@ -1,11 +1,20 @@
 import GroupChat from '@/components/chat/group-chat.component';
 import { COLORS } from '@/constant/colors.constant';
+import { ChatContext } from '@/context/chat.context';
 import { useQueryUsers } from '@/hooks/user/useQueryUsers';
 import { Card, Group, Space, TextInput } from '@mantine/core';
 import { IconSearch } from '@tabler/icons-react';
+import { useContext, useEffect } from 'react';
 
-const GroupChatLayout = () => {
+interface IGroupChatParentType {
+  onClick?: (e: any) => void;
+}
+
+const GroupChatLayout = ({ onClick }: IGroupChatParentType) => {
   const { userData, isSuccess } = useQueryUsers();
+  const { chatId, setChatId } = useContext(ChatContext);
+
+  //   console.log('CHAT ID : ', chatId);
 
   return (
     <Card withBorder h={650} ff={'Lato'}>
@@ -31,6 +40,7 @@ const GroupChatLayout = () => {
         member={userData}
         isLoading={isSuccess}
         isMessageIn={true}
+        onClick={onClick}
       />
 
       <Space h={30} />

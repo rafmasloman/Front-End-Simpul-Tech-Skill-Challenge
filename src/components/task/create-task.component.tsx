@@ -14,33 +14,15 @@ import {
   Textarea,
 } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
-import { IconCalendarEvent, IconArrowUp, IconDots } from '@tabler/icons-react';
+import { IconDots } from '@tabler/icons-react';
 import { useState } from 'react';
 
-interface ITaskProps {
-  title: string;
-  description: string;
-  date: string;
-  isAddTask?: boolean;
-}
-
-const TaskCard = ({ title, description, date, isAddTask }: ITaskProps) => {
-  const [menuOption, setMenuOption] = useState(false);
+const CreateTask = () => {
   const [expandContent, setExpandContent] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
-  const [value, setValue] = useState(description);
+  const [value, setValue] = useState('');
 
   const [checked, setChecked] = useState(false);
-
-  console.log('Is Expand : ', expandContent);
-
-  const showMenu = () => {
-    return (
-      <Button className=" flex   text-red-400  h-9 border px-5 rounded-md border-primary-dark-gray">
-        Delete
-      </Button>
-    );
-  };
 
   return (
     <Flex direction={'row'}>
@@ -68,18 +50,17 @@ const TaskCard = ({ title, description, date, isAddTask }: ITaskProps) => {
           align={'flex-start'}
           className="relative w-full"
         >
-          <Text
-            className="w-3/6 font-semibold "
-            c={checked ? COLORS['primary-gray'] : ''}
-            td={checked ? 'line-through' : ''}
-          >
-            {title}
-          </Text>
+          <TextInput
+            className="w-3/6 "
+            placeholder="Type Task Title"
+            styles={{
+              input: {
+                borderColor: COLORS['secondary-gray'],
+              },
+            }}
+          />
+
           <Group>
-            {checked ? null : <Text className="text-red-500">2 Days Left</Text>}
-
-            <Text>12/06/2021</Text>
-
             <div
               className={`${expandContent ? '' : 'rotate-180'}`}
               onClick={() => setExpandContent(!expandContent)}
@@ -88,8 +69,7 @@ const TaskCard = ({ title, description, date, isAddTask }: ITaskProps) => {
             </div>
 
             <Stack gap={0}>
-              <IconDots size={20} onClick={() => setMenuOption(!menuOption)} />
-              {menuOption ? showMenu() : null}
+              <IconDots size={20} />
             </Stack>
           </Group>
         </Flex>
@@ -105,7 +85,7 @@ const TaskCard = ({ title, description, date, isAddTask }: ITaskProps) => {
               <ICSchedule />
             </div>
             <DateInput
-              placeholder="Input Date"
+              placeholder="Set Date"
               rightSection={<ICCalender />}
               decadeLabelFormat={'YYYY'}
               styles={{
@@ -122,19 +102,19 @@ const TaskCard = ({ title, description, date, isAddTask }: ITaskProps) => {
           </Group>
           <Flex direction={'row'} align={'start'} gap={18}>
             <div className="w-fit h-fit " onClick={() => setIsEdit(!isEdit)}>
-              <ICEdit isActive={true} />
+              <ICEdit />
             </div>
             <Textarea
               w={'100%'}
               value={value}
               onChange={(event) => setValue(event.currentTarget.value)}
-              disabled={!isEdit}
               autosize
               minRows={2}
               maxRows={4}
+              placeholder="No Description"
               styles={{
                 input: {
-                  borderColor: isEdit ? COLORS['primary-gray'] : 'white',
+                  borderColor: 'white',
                   color: COLORS['secondary-gray'],
                   width: '100%',
                   textAlign: 'justify',
@@ -149,4 +129,4 @@ const TaskCard = ({ title, description, date, isAddTask }: ITaskProps) => {
   );
 };
 
-export default TaskCard;
+export default CreateTask;

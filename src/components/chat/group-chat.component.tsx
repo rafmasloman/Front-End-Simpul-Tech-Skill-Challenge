@@ -3,6 +3,8 @@ import { COLORS } from '@/constant/colors.constant';
 import { IGroupChatProps } from '@/interfaces/chat.interfaces';
 import { Group, Text, Divider, Avatar, Box, Stack, Flex } from '@mantine/core';
 import SkeletonChat from './skeleton-chat.component';
+import { ChangeEvent, useContext } from 'react';
+import { ChatContext } from '@/context/chat.context';
 
 const GroupChat = ({
   groupname,
@@ -14,8 +16,16 @@ const GroupChat = ({
 }: IGroupChatProps) => {
   console.log(isLoading);
 
+  const { setChatId } = useContext(ChatContext);
   return isLoading ? (
-    <Box onClick={onClick}>
+    <Box
+      //   onClick={(e: any) => {
+      //     e.preventDefault();
+      //     setChatId(e.target.innerHTML);
+      //     console.log(e.target.innerHTML);
+      //   }}
+      onClick={onClick}
+    >
       <Flex direction={'row'} gap={20}>
         <Avatar.Group spacing={16}>
           <Avatar size={'md'}>

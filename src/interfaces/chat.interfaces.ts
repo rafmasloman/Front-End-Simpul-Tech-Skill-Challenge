@@ -4,7 +4,7 @@ export interface IGroupChatProps {
   member: IMemberGroup[];
   isMessageIn?: boolean;
   isLoading?: boolean;
-  onClick?: () => void;
+  onClick?: (e: any) => void;
 }
 
 export interface IMemberGroup {
